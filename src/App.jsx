@@ -1,4 +1,5 @@
-import { Prueba } from "./assets/Prueba"
+import { Routes, Route } from 'react-router-dom';
+import Characters from './pages/Characters';
 
 
 function App() {
@@ -6,7 +7,11 @@ function App() {
 
   return (
     <>
-      
+    <Routes>
+      <Route path="/" element={<Characters />} />
+        
+      <Route path="/characters" element={<Characters />} />
+    </Routes>
     </>
   )
 }
