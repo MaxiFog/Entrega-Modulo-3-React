@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { fetchApi } from "../services/api";
+import { useState, useEffect } from 'react';
+import { fetchApi } from '../services/api';
 
 export const useFetchPotter = (endpoint) => {
   const [data, setData] = useState([]);
@@ -8,22 +8,30 @@ export const useFetchPotter = (endpoint) => {
 
   useEffect(() => {
     const getData = async () => {
-    try {
+      try {
         setLoading(true);
-
         const result = await fetchApi(endpoint);
+        
+        const filteredData = result.data.filter(
+          (char) => 
+            char.attributes.image && 
+            char.attributes.image !== null && 
+            char.attributes.image.trim() !== ""
+        );
 
-        setData(result.data);
-    } catch (err) {
-        setError("Error: No pudimos invocar los datos mágicos.");
-    } finally {
+        setData(filteredData);
+        setError(null);
+      } catch (err) {
+        setError("No se pudo conectar con el mundo mágico.");
+        console.error(err);
+      } finally {
         setLoading(false);
-    }
+      }
     };
 
     getData();
-}, [endpoint]);
+  }, [endpoint]);
 
-return { data, loading, error };
+  return { data, loading, error };
 };
 

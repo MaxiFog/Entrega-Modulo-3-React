@@ -1,19 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Characters from './pages/Characters';
-
+import Favorites from './pages/Favorites';
 
 function App() {
-
-
   return (
     <>
-    <Routes>
-      <Route path="/" element={<Characters />} />
-        
-      <Route path="/characters" element={<Characters />} />
-    </Routes>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Characters />} />
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

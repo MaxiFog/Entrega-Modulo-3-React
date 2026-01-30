@@ -1,21 +1,17 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 export const useFavoriteStore = create((set) => ({
-    favorites: [],
-    loading: false,
-    error: null,
+  favorites: [],
+  
+  addFavorite: (character) => 
+    set((state) => {
+      const exists = state.favorites.some((fav) => fav.id === character.id);
+      if (exists) return state; 
+      return { favorites: [...state.favorites, character] };
+    }),
 
-    setFavorites: (favorites) => set({ favorites }),
-    setLoading: (loading) => set({ loading }),
-    setError: (error) => set({ error }),
-
-    addFavorite: (character) =>
+  removeFavorite: (id) => 
     set((state) => ({
-        favorites: [...state.favorites, character],
-    })),
-
-    removeFavorite: (id) =>
-    set((state) => ({
-        favorites: state.favorites.filter((char) => char.id !== id),
+      favorites: state.favorites.filter((char) => char.id !== id),
     })),
 }));

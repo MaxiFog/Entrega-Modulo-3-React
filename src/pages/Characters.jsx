@@ -1,14 +1,30 @@
-import { Grid, Typography, Container, CircularProgress, Alert, Box } from '@mui/material';
-import { useFetchPotter } from '../hooks/useFetchPotter';
-import CharacterCard from '../components/CharacterCard';
+import React from "react";
+import {
+  Container,
+  Typography,
+  Grid,
+  CircularProgress,
+  Alert,
+  Box,
+} from "@mui/material";
+import { useFetchPotter } from "../hooks/useFetchPotter";
+import CharacterCard from "../components/CharacterCard";
 
 const Characters = () => {
-  const { data: characters, loading, error } = useFetchPotter('/characters');
+  const endpoint =
+    "/characters?filter[name_cont_any]=Harry,Hermione,Albus,Severus,Draco,Sirius,Luna,Neville,Voldemort,Bellatrix&filter[image_present]=true&page[size]=12";
+
+  const { data: characters, loading, error } = useFetchPotter(endpoint);
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-        <CircularProgress />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="80vh"
+      >
+        <CircularProgress size={60} color="success" />
       </Box>
     );
   }
@@ -23,13 +39,18 @@ const Characters = () => {
 
   return (
     <Container sx={{ py: 4 }}>
-      <Typography variant="h3" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
-        Personajes de Harry Potter
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{ fontWeight: "bold", mb: 4, color: "#2e7d32" }}
+      >
+        Personajes Principales
       </Typography>
-      
-      <Grid container spacing={4}>
-        {characters.map((char) => (
-          <Grid item key={char.id} xs={12} sm={6} md={4}>
+
+      <Grid container spacing={3}>
+        {characters.slice(0, 8).map((char) => (
+          <Grid key={char.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <CharacterCard character={char} />
           </Grid>
         ))}
